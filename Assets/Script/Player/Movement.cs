@@ -10,6 +10,7 @@ public class Movement : MonoBehaviour
     private Rigidbody rb;
     private Vector3 movement;
     [SerializeField] private Camera cam;
+    [SerializeField] private Transform orientation;
 
     private float xRot = 0;
     private float yRot = 0;
@@ -21,7 +22,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        movement = orientation.right * Input.GetAxis("Horizontal") + orientation.forward * Input.GetAxis("Vertical");
 
         Look(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * Time.deltaTime * sensMouse);
     }
@@ -43,6 +44,6 @@ public class Movement : MonoBehaviour
         xRot = Mathf.Clamp(xRot, -90, 90);
 
         cam.transform.rotation = Quaternion.Euler(xRot, yRot, 0);
-        transform.rotation = Quaternion.Euler(0, yRot, 0);
+        orientation.rotation = Quaternion.Euler(0, yRot, 0);
     }
 }
