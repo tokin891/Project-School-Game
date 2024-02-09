@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class VolumeManager : MonoBehaviour
 {
-    public Slider volumeSlider;
-    private static VolumeManager instance;
+    [SerializeField]
+    private Slider volumeSlider;
+    public static VolumeManager instance;
 
     private void Start() {
         if (instance == null) {

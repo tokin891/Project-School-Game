@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public Dropdown qualityDropdown;
+    [SerializeField]
+    private Dropdown qualityDropdown;
 
     private void Start(){
         PopulateQualityDropdown();
@@ -20,7 +21,8 @@ public class MainMenu : MonoBehaviour
     public void Exit(){
             Application.Quit();
     }
-
+    
+    
     public void PopulateQualityDropdown(){
         string[] qualityLevels = QualitySettings.names;
         qualityDropdown.ClearOptions();
@@ -35,7 +37,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetInt("QualityLevel", value);
         PlayerPrefs.Save();
     }
-
+    
     private void SetDropdownValue(int value){
         qualityDropdown.SetValueWithoutNotify(value);
     }

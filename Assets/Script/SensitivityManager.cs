@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class SensitivityManager : MonoBehaviour
 {
-    public Slider sensitivitySlider;
+    [SerializeField]
+    private Slider sensitivitySlider;
 
-    private static SensitivityManager instance;
+    public static SensitivityManager instance;
 
     private void Start(){
         if (instance == null){
