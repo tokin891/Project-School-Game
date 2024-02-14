@@ -18,6 +18,13 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+        float sens = PlayerPrefs.GetFloat("Sensitivity");
+        if (sens == 0)
+        {
+            UpdateSensitivity(100f);
+        }
+        else
+            UpdateSensitivity(sens);
     }
 
     void Update()
@@ -45,5 +52,10 @@ public class Movement : MonoBehaviour
 
         cam.transform.rotation = Quaternion.Euler(xRot, yRot, 0);
         orientation.rotation = Quaternion.Euler(0, yRot, 0);
+    }
+
+    public void UpdateSensitivity(float sensitivity)
+    {
+        sensMouse = sensitivity;
     }
 }
