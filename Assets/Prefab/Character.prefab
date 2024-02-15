@@ -164,7 +164,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3088804749405799910}
         m_TargetAssemblyTypeName: Movement, Assembly-CSharp
-        m_MethodName: SetMovementValue
+        m_MethodName: Move
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -192,6 +192,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 481ced98-9ce2-4a48-96c4-98c0ac1bd40d
     m_ActionName: Player/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1402899304461396077}
+        m_TargetAssemblyTypeName: InteractSystem, Assembly-CSharp
+        m_MethodName: TryInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 55e6f7e4-ad1d-4c19-9861-1c9c3a18ceac
+    m_ActionName: Player/Interact[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -354,7 +370,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5806261570551361545}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
