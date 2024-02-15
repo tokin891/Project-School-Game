@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
@@ -14,17 +16,25 @@ public class Movement : MonoBehaviour
 
     private float xRot = 0;
     private float yRot = 0;
+    private Vector2 inputMouse;
+    private Vector2 inputMove;
 
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        movement = orientation.right * Input.GetAxis("Horizontal") + orientation.forward * Input.GetAxis("Vertical");
+        movement = orientation.right * inputMove.x + orientation.forward * inputMove.y;
 
-        Look(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * Time.deltaTime * sensMouse);
+        yRot += inputMouse.x;
+        xRot -= inputMouse.y;
+        xRot = Mathf.Clamp(xRot, -90, 90);
+
+        cam.transform.rotation = Quaternion.Euler(xRot, yRot, 0);
+        orientation.rotation = Quaternion.Euler(0, yRot, 0);
     }
 
     void FixedUpdate()
@@ -37,13 +47,13 @@ public class Movement : MonoBehaviour
         rb.velocity = direction * speed;
     }
 
-    void Look(Vector2 input)
+    public void Move(InputAction.CallbackContext context)
     {
-        yRot += input.x;
-        xRot -= input.y;
-        xRot = Mathf.Clamp(xRot, -90, 90);
+        inputMove = context.ReadValue<Vector2>();
+    }
 
-        cam.transform.rotation = Quaternion.Euler(xRot, yRot, 0);
-        orientation.rotation = Quaternion.Euler(0, yRot, 0);
+    public void Look(InputAction.CallbackContext context)
+    {
+        inputMouse = context.ReadValue<Vector2>() * sensMouse * Time.deltaTime;;
     }
 }
