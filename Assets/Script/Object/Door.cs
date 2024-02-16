@@ -12,7 +12,6 @@ public class Door : MonoBehaviour, IInteract
     private Quaternion currentRot;
     private Quaternion destinationRot;
     private float delay;
-    private float timeCount = .0f;
 
     private void Awake()
     {
@@ -34,8 +33,7 @@ public class Door : MonoBehaviour, IInteract
 
     private void Update()
     {
-        transform.localRotation = Quaternion.Lerp(currentRot, destinationRot, timeCount);
-        timeCount += Time.deltaTime;
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, destinationRot, smooth * Time.deltaTime);
     }
 
     private void Open()
