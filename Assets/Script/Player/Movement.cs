@@ -18,13 +18,12 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-        float sens = PlayerPrefs.GetFloat("Sensitivity");
-        if (sens == 0)
+        if (PlayerPrefs.HasKey("Sensitivity"))
         {
-            UpdateSensitivity(100f);
+            UpdateSensitivity(PlayerPrefs.GetFloat("Sensitivity"));
         }
         else
-            UpdateSensitivity(sens);
+            UpdateSensitivity(100);
     }
 
     void Update()
