@@ -32,6 +32,7 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        speed = speedNormal;
         cameraAwakePos = cameraHolder.transform.localPosition;
         cameraTarget = cameraAwakePos;
         rb = this.GetComponent<Rigidbody>();
