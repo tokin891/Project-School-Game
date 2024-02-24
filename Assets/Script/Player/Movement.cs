@@ -23,6 +23,14 @@ public class Movement : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
+
+        float sens = PlayerPrefs.GetFloat("Sensitivity");
+        if (sens == 0)
+        {
+            UpdateSensitivity(100f);
+        }
+        else
+            UpdateSensitivity(sens);
     }
 
     void Update()
@@ -55,5 +63,10 @@ public class Movement : MonoBehaviour
     public void Look(InputAction.CallbackContext context)
     {
         inputMouse = context.ReadValue<Vector2>() * sensMouse * Time.deltaTime;;
+    }
+
+    public void UpdateSensitivity(float sensitivity)
+    {
+        sensMouse = sensitivity;
     }
 }
