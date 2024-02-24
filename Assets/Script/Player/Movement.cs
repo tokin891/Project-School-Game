@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.StandaloneInputModule;
+using UnityEngine.InputSystem;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
@@ -14,6 +17,8 @@ public class Movement : MonoBehaviour
 
     private float xRot = 0;
     private float yRot = 0;
+    private Vector2 inputMouse;
+    private Vector2 inputMove;
 
     void Start()
     {
@@ -28,9 +33,13 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        movement = orientation.right * Input.GetAxis("Horizontal") + orientation.forward * Input.GetAxis("Vertical");
+        movement = orientation.right * inputMove.x + orientation.forward * inputMove.y;
 
-        Look(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * Time.deltaTime * sensMouse);
+        yRot += inputMouse.x;
+        xRot -= inputMouse.y;
+        xRot = Mathf.Clamp(xRot, -90, 90);
+        cam.transform.rotation = Quaternion.Euler(xRot, yRot, 0);
+        orientation.rotation = Quaternion.Euler(0, yRot, 0);
     }
 
     void FixedUpdate()
@@ -43,14 +52,14 @@ public class Movement : MonoBehaviour
         rb.velocity = direction * speed;
     }
 
-    void Look(Vector2 input)
+    public void Look(InputAction.CallbackContext context)
     {
-        yRot += input.x;
-        xRot -= input.y;
-        xRot = Mathf.Clamp(xRot, -90, 90);
+        inputMouse = context.ReadValue<Vector2>() * sensMouse * Time.deltaTime; ;
+    }
 
-        cam.transform.rotation = Quaternion.Euler(xRot, yRot, 0);
-        orientation.rotation = Quaternion.Euler(0, yRot, 0);
+    public void Move(InputAction.CallbackContext context)
+    {
+        inputMove = context.ReadValue<Vector2>();
     }
 
     public void UpdateSensitivity(float sensitivity)
