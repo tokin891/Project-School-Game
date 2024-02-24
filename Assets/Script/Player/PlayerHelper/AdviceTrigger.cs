@@ -3,61 +3,53 @@ using System.Collections;
 
 public class AdviceTrigger : MonoBehaviour{
     private bool isPlayerInside = false;
-    private float timeInsideTrigger = 0f;
+    private Coroutine displayCoroutine;
     public AdviceManager adviceManager;
     public string[] messages;
     public float[] messageDurations;
     private int currentMessageIndex = 0;
-    private float fadeDuration;
-
-    private void Start(){
-        fadeDuration = adviceManager.fadeDuration;
-    }
 
     private void OnTriggerEnter(Collider other){
         if (other.CompareTag("Player") && !isPlayerInside){
             isPlayerInside = true;
-            StartCoroutine(DisplayMessagesCoroutine());
+            StartDisplayMessagesCoroutine();
         }
     }
 
     private void OnTriggerExit(Collider other){
         if (other.CompareTag("Player")){
             isPlayerInside = false;
-            timeInsideTrigger = 0f;
+            StopDisplayMessagesCoroutine();
         }
     }
 
-    private void Update(){
-        if (isPlayerInside){
-            timeInsideTrigger += Time.deltaTime;
+    private void StartDisplayMessagesCoroutine(){
+        if (displayCoroutine == null){
+            displayCoroutine = StartCoroutine(DisplayMessagesCoroutine());
         }
     }
 
-private IEnumerator DisplayMessagesCoroutine(){
-    while (currentMessageIndex < messages.Length){
-        float elapsedTime = 0f;
-        bool displayedMessage = false;
-        while (elapsedTime < messageDurations[currentMessageIndex] && isPlayerInside){
-            elapsedTime += Time.deltaTime;
-            yield return null;
+    private void StopDisplayMessagesCoroutine(){
+        if (displayCoroutine != null){
+            StopCoroutine(displayCoroutine);
+            displayCoroutine = null;
         }
+    }
 
-        if (isPlayerInside && !displayedMessage){
-            adviceManager.DisplayMessage(messages[currentMessageIndex]);
-            displayedMessage = true;
-            yield return new WaitForSeconds(fadeDuration);
-            currentMessageIndex++;
-            while (isPlayerInside){
+    private IEnumerator DisplayMessagesCoroutine(){
+        while (currentMessageIndex < messages.Length){
+            float elapsedTime = 0f;
+            while (elapsedTime < messageDurations[currentMessageIndex] && isPlayerInside){
+                elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            while (!isPlayerInside)
-            {
-                yield return null;
+
+            if (isPlayerInside){
+                adviceManager.DisplayMessage(messages[currentMessageIndex]);
+                yield return new WaitForSeconds(adviceManager.fadeDuration);
+                currentMessageIndex++;
             }
-            timeInsideTrigger = 0f;
         }
+        currentMessageIndex = 0;
     }
-    currentMessageIndex = 0;
-}
 }
