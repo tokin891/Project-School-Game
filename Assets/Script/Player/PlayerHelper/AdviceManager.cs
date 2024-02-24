@@ -23,12 +23,14 @@ public class AdviceManager : MonoBehaviour{
     private IEnumerator FadeIn(){
         float elapsedTime = 0f;
         Color textColor = adviceText.color;
+
         while (elapsedTime < fadeDuration){
             textColor.a = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
             adviceText.color = textColor;
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
         textColor.a = 1f;
         adviceText.color = textColor;
     }
