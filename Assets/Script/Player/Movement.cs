@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private Transform crouchCamera;
     [SerializeField] private float speedNormal;
     [SerializeField] private float speedRunning;
+    [SerializeField] private Transform heightUnderHead;
 
     private float speed;
     private float xRot;
@@ -26,8 +27,10 @@ public class Movement : MonoBehaviour
     private Vector3 cameraAwakePos;
     private Vector3 cameraTarget;
     private CapsuleCollider capsuleCollider;
+    private bool crouchingNotDone;
+    private bool isCrouching;
 
-    public bool IsCrouching {  get; private set; }
+    public bool IsCrouching { get; private set; }
     public bool IsRunning { get; private set; }
 
     void Start()
@@ -60,6 +63,10 @@ public class Movement : MonoBehaviour
         orientation.rotation = Quaternion.Euler(0, yRot, 0);
 
         cameraHolder.transform.localPosition = Vector3.Lerp(cameraHolder.localPosition, cameraTarget, 7.5f * Time.deltaTime);
+        if(!IsSomethingUnderHead() && crouchingNotDone && !isCrouching)
+        {
+            SetCrouching(false);
+        }
     }
 
     void FixedUpdate()
@@ -70,6 +77,23 @@ public class Movement : MonoBehaviour
     void MoveCharacter(Vector3 direction)
     {
         rb.velocity = direction * speed;
+    }
+
+    void SetCrouching(bool crouching)
+    {
+        if(crouching)
+        {
+            cameraTarget = crouchCamera.transform.localPosition;
+            capsuleCollider.height = 1f;
+            IsCrouching = true;
+        }
+        else
+        {
+            capsuleCollider.height = 2f;
+            cameraTarget = cameraAwakePos;
+            crouchingNotDone = true;
+            IsCrouching = false;
+        }
     }
 
     public void Look(InputAction.CallbackContext context)
@@ -86,15 +110,17 @@ public class Movement : MonoBehaviour
     {
         if(context.performed)
         {
-            IsCrouching = true;
-            cameraTarget = crouchCamera.transform.localPosition;
-            capsuleCollider.height = 1.25f;
+            isCrouching = true;
+            SetCrouching(true);
         }
         if(context.canceled)
         {
-            IsCrouching = false;
-            cameraTarget = cameraAwakePos;
-            capsuleCollider.height = 2f;
+            isCrouching = false;
+
+            if(IsSomethingUnderHead() == false)
+            {
+                SetCrouching(false);
+            }
         }
     }
 
@@ -115,5 +141,15 @@ public class Movement : MonoBehaviour
     public void UpdateSensitivity(float sensitivity)
     {
         sensMouse = sensitivity;
+    }
+
+    private bool IsSomethingUnderHead()
+    {
+        return Physics.CheckSphere(heightUnderHead.position, 0.25f);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawSphere(heightUnderHead.position, 0.25f);
     }
 }
