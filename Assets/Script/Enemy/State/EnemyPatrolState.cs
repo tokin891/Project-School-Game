@@ -36,7 +36,6 @@ public class EnemyPatrolState : IEnemyState
         if (!enemyData.Agent.pathPending && enemyData.Agent.remainingDistance < 0.5f)
         {
             GotoNextPoint();
-            Debug.Log("Next point");
         }
 
         if (chaseEnemyModule.IsEnemySeePlayer)

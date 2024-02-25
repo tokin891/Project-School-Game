@@ -36,7 +36,6 @@ public class ChaseEnemyModule : MonoBehaviour
         Vector3 targetDir = Target.transform.position - enemy.transform.position;
         angle = Vector3.Angle(targetDir, enemy.transform.forward);
         eyes.LookAt(Target.transform.position);
-        Debug.Log(IsEnemySeePlayerLocal());
     }
 
     private bool IsEnemySeePlayerLocal()
