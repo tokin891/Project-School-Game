@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CutsceneManager : MonoBehaviour
 {
     public static CutsceneManager Instance;
 
     [SerializeField] private List<Cutscene> cutscenes;
+    [SerializeField] private int loadScene = 2;
+    [SerializeField] private GameObject loadingScreen;
     private int indexCutscene;
 
     private void Awake()
@@ -28,6 +31,8 @@ public class CutsceneManager : MonoBehaviour
         if (cutscenes.ElementAtOrDefault(indexCutscene) == null)
         {
             // End
+            SceneManager.LoadScene(loadScene);
+            loadingScreen?.SetActive(true);
             return;
         }
 
