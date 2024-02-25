@@ -425,7 +425,7 @@ Transform:
   - {fileID: 2065935205121923734}
   - {fileID: 890332240197341866}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &5152744291195927051
 CapsuleCollider:
@@ -506,6 +506,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1680674130588425913}
+  - component: {fileID: 6832613744820879502}
   m_Layer: 0
   m_Name: Cam Holder
   m_TagString: Untagged
@@ -529,6 +530,18 @@ Transform:
   m_Father: {fileID: 8684244649081555520}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6832613744820879502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630822731574174641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc49d8ab9eb64884dbae23de534f0c9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6660711904109817484
 GameObject:
   m_ObjectHideFlags: 0

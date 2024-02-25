@@ -14,8 +14,8 @@ public class MainMenu : MonoBehaviour
         PopulateQualityDropdown();
     }
 
-    public void LoadLevel(){
-        SceneManager.LoadScene("HUB");
+    public void LoadLevel(int lvl){
+        SceneManager.LoadScene(lvl);
     }
 
     public void Exit(){

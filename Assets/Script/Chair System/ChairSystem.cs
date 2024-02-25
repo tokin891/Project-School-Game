@@ -1,3 +1,5 @@
+using DG.Tweening;
+using Google.Protobuf.WellKnownTypes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +11,8 @@ public class ChairSystem : MonoBehaviour
     [SerializeField] private float maxAngelCameraRotate = 30f;
     [SerializeField] private float maxRatioEscape = 100;
     [SerializeField] private float addRatioEscape = 15;
+    [SerializeField] CanvasGroup blackScreem;
+    [SerializeField] GameObject player;
 
     private Vector2 input;
     private Transform chair;
@@ -94,6 +98,17 @@ public class ChairSystem : MonoBehaviour
         {
             animator.SetTrigger("End");
             isEnd = true;
+            StartCoroutine(AfterEnd());
         }
+    }
+
+    private IEnumerator AfterEnd()
+    {
+        yield return new WaitForSeconds(5);
+
+        DOTween.To(() => blackScreem.alpha, x => blackScreem.alpha = x, 1, 2);
+        yield return new WaitForSeconds(2);
+        player?.SetActive(true);
+        gameObject.SetActive(false);
     }
 }
