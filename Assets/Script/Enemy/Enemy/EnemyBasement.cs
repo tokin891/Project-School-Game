@@ -7,7 +7,10 @@ public class EnemyBasement : EnemyBehaviour
 {
     [SerializeField] Transform[] points;
     [SerializeField] float speedPatrol = 3f;
+    [SerializeField] float speedChasing = 4.5f;
     [SerializeField] float delayWaitingInPoint = 5f;
+    [SerializeField] Light light;
+    public ChaseEnemyModule chaseModule;
 
     private NavMeshAgent agent;
     private EnemyData enemyData;
@@ -18,9 +21,15 @@ public class EnemyBasement : EnemyBehaviour
         agent.autoBraking = false;
         enemyData = new EnemyData(agent, this);
 
-        PatrolState = new EnemyPatrolState(enemyData, speedPatrol, points);
-        IdleState = new EnemyIdleStateWithDelay(enemyData, delayWaitingInPoint, PatrolState);
+        PatrolState = new EnemyPatrolState(enemyData, speedPatrol, points,chaseModule);
+        IdleStateWithDelay = new EnemyIdleStateWithDelay(enemyData, delayWaitingInPoint, PatrolState);
+        ChaseState = new EnemyChaseState(enemyData, chaseModule.Target.transform, speedChasing);
 
         SwitchState(PatrolState);
+    }
+
+    public void SwitchLight(Color color)
+    {
+        light.color = color;
     }
 }
