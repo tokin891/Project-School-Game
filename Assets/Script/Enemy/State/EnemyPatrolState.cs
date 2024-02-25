@@ -10,12 +10,14 @@ public class EnemyPatrolState : IEnemyState
 
     Transform[] points;
     private int destPoint = 0;
+    private ChaseEnemyModule chaseEnemyModule;
 
-    public EnemyPatrolState(EnemyData enemyData, float speed, Transform[] points)
+    public EnemyPatrolState(EnemyData enemyData, float speed, Transform[] points, ChaseEnemyModule chaseEnemyModule)
     {
         this.enemyData = enemyData;
         this.speed = speed;
         this.points = points;
+        this.chaseEnemyModule = chaseEnemyModule;
     }
 
     public void Enter()
@@ -32,7 +34,14 @@ public class EnemyPatrolState : IEnemyState
     public void Update()
     {
         if (!enemyData.Agent.pathPending && enemyData.Agent.remainingDistance < 0.5f)
+        {
             GotoNextPoint();
+        }
+
+        if (chaseEnemyModule.IsEnemySeePlayer)
+        {
+            enemyData.EnemyBehaviour.SwitchState(enemyData.EnemyBehaviour.ChaseState);
+        }
     }
 
     void GotoNextPoint()
@@ -44,6 +53,6 @@ public class EnemyPatrolState : IEnemyState
 
         destPoint = (destPoint + 1) % points.Length;
 
-        enemyData.EnemyBehaviour.SwitchState(enemyData.EnemyBehaviour.IdleState);
+        enemyData.EnemyBehaviour.SwitchState(enemyData.EnemyBehaviour.IdleStateWithDelay);
     }
 }
