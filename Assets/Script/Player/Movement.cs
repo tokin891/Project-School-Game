@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float speedNormal;
     [SerializeField] private float speedRunning;
     [SerializeField] private Transform heightUnderHead;
+    [SerializeField] private Vector3 customGravity;
 
     private float speed;
     private float xRot;
@@ -71,6 +72,7 @@ public class Movement : MonoBehaviour
     void FixedUpdate()
     {
         MoveCharacter(movement);
+        rb.velocity += customGravity * Time.deltaTime;
     }
 
     void MoveCharacter(Vector3 direction)
@@ -88,7 +90,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            capsuleCollider.height = 2f;
+            capsuleCollider.height = 2.45f;
             cameraTarget = cameraAwakePos;
             crouchingNotDone = true;
             IsCrouching = false;
