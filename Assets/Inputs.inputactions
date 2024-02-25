@@ -195,6 +195,17 @@
                 },
                 {
                     "name": "",
+                    "id": "3ec3ea3d-913a-4e87-b5d2-c37b7db8f4ad",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "aa8037f0-4f7e-4799-a211-bed23b082b86",
                     "path": "<Keyboard>/d",
                     "interactions": "",
@@ -217,6 +228,17 @@
                 },
                 {
                     "name": "",
+                    "id": "f4cb06ca-ddd8-4a00-830f-f6a05bf2c4b9",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7e7c86d2-b041-4dab-bb25-fc1f58a310cd",
                     "path": "<Keyboard>/leftCtrl",
                     "interactions": "",
@@ -229,7 +251,7 @@
                 {
                     "name": "",
                     "id": "ea4f3f03-abdb-4319-bf0d-eb417df63b61",
-                    "path": "<Gamepad>/leftStick/down",
+                    "path": "<Gamepad>/leftStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

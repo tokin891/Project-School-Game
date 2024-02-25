@@ -40,7 +40,7 @@ public class ShadowPuzzle : MonoBehaviour
 
     public void CheckAnserw(InputAction.CallbackContext callbackContext)
     {
-        if (angle <= radius || angle - 180 <= radius)
+        if (angle <= radius || ((angle - 175 <= radius) && (angle - 175 > 0)))
         {
             GoodAnserw();
         }
