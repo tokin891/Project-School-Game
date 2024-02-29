@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class PinManager : MonoBehaviour{
 	
@@ -21,6 +22,13 @@ public class PinManager : MonoBehaviour{
     public AudioClip unlockSoundClip;
     public delegate void CorrectPinEnteredAction();
     public static event CorrectPinEnteredAction OnCorrectPinEntered;
+
+    private bool isLeft;
+    private bool isRight;
+    private bool isUp;
+    private bool isDown;
+
+    private float delay;
 
     void Start(){
         Door doorScript = doorObject.GetComponent<Door>();
@@ -83,26 +91,29 @@ public class PinManager : MonoBehaviour{
     }
 
     void Update(){
-        if (Input.GetKeyDown(KeyCode.W)){
+        if (isUp && delay <= Time.time){
             ResetGlowEffect(pinObjects[currentPinIndex]);
             currentPinIndex = (currentPinIndex - 1 + pinObjects.Count) % pinObjects.Count;
             glowEffectApplied = false;
+            delay = Time.time + 1;
         }
-        else if (Input.GetKeyDown(KeyCode.S)){
+        else if (isDown && delay <= Time.time)
+        {
             ResetGlowEffect(pinObjects[currentPinIndex]);
             currentPinIndex = (currentPinIndex + 1) % pinObjects.Count;
             glowEffectApplied = false;
+            delay = Time.time + 1;
         }
 
         GameObject currentPinObject = pinObjects[currentPinIndex];
         Transform pinTransform = currentPinObject.transform;
 
         float rotationInput = 0f;
-        if (Input.GetKey(KeyCode.A)){
+        if (isLeft){
             rotationInput = -1f;
             PlayRotationSound();
         }
-        else if (Input.GetKey(KeyCode.D)){
+        else if (isRight){
             rotationInput = 1f;
             PlayRotationSound();
         }
@@ -111,7 +122,7 @@ public class PinManager : MonoBehaviour{
         pinTransform.eulerAngles = new Vector3(pinTransform.eulerAngles.x, pinTransform.eulerAngles.y, newZRotation);
         int outputValue = Mathf.RoundToInt(newZRotation / 36f) % 10;
 
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S)){
+        if (isLeft || isRight || isUp || isDown){
             if (currentPinIndex < enteredPins.Count){
                 enteredPins[currentPinIndex] = outputValue.ToString();
             }
@@ -127,21 +138,48 @@ public class PinManager : MonoBehaviour{
                 ApplyGlowEffect(currentPinObject, glowIntensity);
                 glowEffectApplied = true;
             }
-        }
+        }     
+    }
 
+    public void Left(InputAction.CallbackContext context)
+    {
+        isLeft = context.performed;
+    }
+
+    public void Right(InputAction.CallbackContext context)
+    {
+        isRight = context.performed;
+    }
+
+    public void Forward(InputAction.CallbackContext context)
+    {
+        isUp = context.performed;
+    }
+
+    public void Backward(InputAction.CallbackContext context)
+    {
+        isDown = context.performed;
+    }
+
+    public void CheckIsCorrect(InputAction.CallbackContext context)
+    {
         string enteredPin = string.Join("", enteredPins);
-        if (enteredPin.Length == maxPinLength && int.Parse(enteredPin) == correctPin){
+        if (enteredPin.Length == maxPinLength && int.Parse(enteredPin) == correctPin)
+        {
             Door doorScript = doorObject.GetComponent<Door>();
-            if (doorScript != null){
+            if (doorScript != null)
+            {
                 doorScript.enabled = true;
                 enabled = false;
             }
 
-            if (OnCorrectPinEntered != null){
+            if (OnCorrectPinEntered != null)
+            {
                 OnCorrectPinEntered();
             }
 
-            if (audioSource != null && unlockSoundClip != null){
+            if (audioSource != null && unlockSoundClip != null)
+            {
                 audioSource.PlayOneShot(unlockSoundClip);
             }
 

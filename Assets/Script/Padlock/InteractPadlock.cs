@@ -1,32 +1,36 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class InteractPadlock : MonoBehaviour, IInteract{
-    [SerializeField] public GameObject characterToDisable;
-    [SerializeField] public PinManager pinManager;
-    [SerializeField] public GameObject mainCamera;
-    [SerializeField] public BoxCollider boxColliderToDisable;
+    [SerializeField] private GameObject characterToDisable;
+    [SerializeField] private PinManager pinManager;
+    [SerializeField] private GameObject mainCamera;
+    [SerializeField] private BoxCollider boxColliderToDisable;
+    [SerializeField] private GameObject inputSystem;
 
     private bool isInPinEntry = false;
 
     private void OnEnable(){
         PinManager.OnCorrectPinEntered += OnCorrectPinEnteredHandler;
+        inputSystem.SetActive(false);
     }
 
     private void OnDisable(){
         PinManager.OnCorrectPinEntered -= OnCorrectPinEnteredHandler;
     }
 
-    private void OnCorrectPinEnteredHandler(){
-        if (isInPinEntry){
+    private void OnCorrectPinEnteredHandler()
+    {
+        if (isInPinEntry)
+        {
             ExitPinEntry();
         }
     }
 
-    private void Update(){
-        if (Input.GetKeyDown(KeyCode.Escape)){
-            ExitPinEntry();
-        }
+    public void TryExit(InputAction.CallbackContext context)
+    {
+        ExitPinEntry();
     }
 
     private void ExitPinEntry(){
@@ -46,6 +50,7 @@ public class InteractPadlock : MonoBehaviour, IInteract{
             boxColliderToDisable.enabled = true;
         }
         isInPinEntry = false;
+        inputSystem.SetActive(false);
     }
 
     public void CameraInteractWithObject(){
@@ -66,5 +71,7 @@ public class InteractPadlock : MonoBehaviour, IInteract{
         if (boxColliderToDisable != null){
             boxColliderToDisable.enabled = false;
         }
+
+        inputSystem.SetActive(true);
     }
 }
