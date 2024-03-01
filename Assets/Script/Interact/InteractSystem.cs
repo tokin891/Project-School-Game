@@ -39,6 +39,10 @@ public class InteractSystem : MonoBehaviour
 
     public void TryInteract(InputAction.CallbackContext context)
     {
-        if(interactObject != null) { interactObject.CameraInteractWithObject(); }
+        if (context.started == false)
+        {
+            return;
+        }
+        if (interactObject != null) { interactObject.CameraInteractWithObject(); }
     }
 }
