@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
 {
+    public static Movement Instance;
     [SerializeField] private float sensMouse = 100f;
     private Rigidbody rb;
     private Vector3 movement;
@@ -30,11 +31,14 @@ public class Movement : MonoBehaviour
     private bool crouchingNotDone;
     private bool isCrouching;
 
+    public Transform Hand;
+
     public bool IsCrouching { get; private set; }
     public bool IsRunning { get; private set; }
 
     void Start()
     {
+        Instance = this;
         speed = speedNormal;
         cameraAwakePos = cameraHolder.transform.localPosition;
         cameraTarget = cameraAwakePos;
