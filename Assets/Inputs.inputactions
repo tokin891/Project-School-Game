@@ -404,7 +404,7 @@
                 {
                     "name": "",
                     "id": "1accc88f-4563-4b7d-afde-7b01ad0aa98c",
-                    "path": "<Mouse>/scroll/up",
+                    "path": "<Mouse>/scroll/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -415,7 +415,7 @@
                 {
                     "name": "",
                     "id": "19343147-7374-402e-84ce-eaa82d2c62aa",
-                    "path": "<Mouse>/scroll/down",
+                    "path": "<Mouse>/scroll/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

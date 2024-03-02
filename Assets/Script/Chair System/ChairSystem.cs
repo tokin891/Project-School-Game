@@ -13,6 +13,7 @@ public class ChairSystem : MonoBehaviour
     [SerializeField] private float addRatioEscape = 15;
     [SerializeField] CanvasGroup blackScreem;
     [SerializeField] GameObject player;
+    [SerializeField] GameObject trapChair;
 
     private Vector2 input;
     private Transform chair;
@@ -110,5 +111,6 @@ public class ChairSystem : MonoBehaviour
         yield return new WaitForSeconds(2);
         player?.SetActive(true);
         gameObject.SetActive(false);
+        trapChair?.SetActive(true);
     }
 }

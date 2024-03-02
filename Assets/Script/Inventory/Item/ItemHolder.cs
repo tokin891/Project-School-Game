@@ -50,6 +50,12 @@ public class ItemHolder : MonoBehaviour
 
     public void SetUsable(bool usable)
     {
+        if(image == null)
+        {
+            WaitForImage(usable);
+            return;
+        }
+
         IsInUse = usable;
 
         if(usable)
@@ -59,5 +65,12 @@ public class ItemHolder : MonoBehaviour
         {
             image.color = colorNotUsable;
         }
+    }
+
+    private IEnumerator WaitForImage(bool usable)
+    {
+        while(image == null)
+            yield return null;
+        SetUsable(usable);
     }
 }
