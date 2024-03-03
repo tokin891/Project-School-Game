@@ -67,7 +67,7 @@ public class Movement : MonoBehaviour
         orientation.rotation = Quaternion.Euler(0, yRot, 0);
 
         cameraHolder.transform.localPosition = Vector3.Lerp(cameraHolder.localPosition, cameraTarget, 7.5f * Time.deltaTime);
-        if(!IsSomethingUnderHead() && crouchingNotDone && !isCrouching)
+        if(!IsSomethingUnderHead() && !isCrouching)
         {
             SetCrouching(false);
         }
@@ -96,7 +96,6 @@ public class Movement : MonoBehaviour
         {
             capsuleCollider.height = 2.45f;
             cameraTarget = cameraAwakePos;
-            crouchingNotDone = true;
             IsCrouching = false;
         }
     }
