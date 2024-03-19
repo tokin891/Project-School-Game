@@ -21,6 +21,7 @@ public class InventoryManager : MonoBehaviour
     private void Awake()
     {
         canGroup = GetComponent<CanvasGroup>();
+        canGroup.alpha = 0;
         Instance = this;
         objectsFromInventory = objectsInHand.GetComponentsInChildren<ObjectFromInventory>();
         UseHolder(0);
