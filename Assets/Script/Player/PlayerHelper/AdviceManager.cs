@@ -3,28 +3,36 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class AdviceManager : MonoBehaviour{
-    public Text adviceText;
-    public GameObject adviceObject;
-    public float fadeDuration = 1f;
+    public static AdviceManager Instance;
+    [SerializeField] Text adviceText;
+    [SerializeField] GameObject adviceObject;
+    [SerializeField] float fadeDuration;
 
-    public void DisplayMessage(string message){
-        StartCoroutine(DisplayMessageCoroutine(message));
+    private void Awake()
+    {
+        Instance = this;
     }
 
-    private IEnumerator DisplayMessageCoroutine(string message){
+    public void DisplayMessage(string message, float textDuration){
+        StartCoroutine(DisplayMessageCoroutine(message, textDuration));
+    }
+
+    private IEnumerator DisplayMessageCoroutine(string message, float textDuration){
         adviceText.text = message;
         adviceObject.SetActive(true);
         yield return StartCoroutine(FadeIn());
-        yield return new WaitForSeconds(fadeDuration);
+        yield return new WaitForSeconds(textDuration);
         yield return StartCoroutine(FadeOut());
         adviceObject.SetActive(false);
     }
 
-    private IEnumerator FadeIn(){
+    private IEnumerator FadeIn()
+    {
         float elapsedTime = 0f;
         Color textColor = adviceText.color;
 
-        while (elapsedTime < fadeDuration){
+        while (elapsedTime < fadeDuration)
+        {
             textColor.a = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
             adviceText.color = textColor;
             elapsedTime += Time.deltaTime;
@@ -35,10 +43,12 @@ public class AdviceManager : MonoBehaviour{
         adviceText.color = textColor;
     }
 
-    private IEnumerator FadeOut(){
+    private IEnumerator FadeOut()
+    {
         float elapsedTime = 0f;
         Color textColor = adviceText.color;
-        while (elapsedTime < fadeDuration){
+        while (elapsedTime < fadeDuration)
+        {
             textColor.a = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
             adviceText.color = textColor;
             elapsedTime += Time.deltaTime;
