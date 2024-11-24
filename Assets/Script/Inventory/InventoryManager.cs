@@ -11,6 +11,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private ItemHolder[] allSlots;
     [SerializeField] private Item prefabItem;
     [SerializeField] private Transform objectsInHand;
+    [SerializeField] private Transform highlightCurrentItem;
 
     private ObjectFromInventory[] objectsFromInventory;
     private int currentUseItemHolder;
@@ -36,6 +37,11 @@ public class InventoryManager : MonoBehaviour
         {
             DOTween.To(() => canGroup.alpha, x => canGroup.alpha = x, 1, 1.5f);
         }
+    }
+
+    private void FixedUpdate()
+    {
+        highlightCurrentItem.position = Vector2.Lerp(highlightCurrentItem.position, allSlots[currentUseItemHolder].transform.position, 10 * Time.deltaTime);
     }
 
     private void UseHolder(int holder)
