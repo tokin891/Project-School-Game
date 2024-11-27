@@ -23,6 +23,7 @@ public class EnemyChaseState : IEnemyState
     public void Enter()
     {
         enemyData.Agent.speed = speed;
+        enemyData.EnemyAnimator.SetInteger("State", 1);
     }
 
     public void Exit()
