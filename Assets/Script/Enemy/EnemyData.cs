@@ -7,10 +7,12 @@ public class EnemyData
 {
     public NavMeshAgent Agent;
     public EnemyBehaviour EnemyBehaviour;
+    public Animator EnemyAnimator;
 
-    public EnemyData(NavMeshAgent agent, EnemyBehaviour enemyBehaviour)
+    public EnemyData(NavMeshAgent agent, EnemyBehaviour enemyBehaviour, Animator enemyAnimator)
     {
         Agent = agent;
         EnemyBehaviour = enemyBehaviour;
+        EnemyAnimator = enemyAnimator;
     }
 }

@@ -10,6 +10,7 @@ public class EnemyBasement : EnemyBehaviour
     [SerializeField] float speedChasing = 4.5f;
     [SerializeField] float delayWaitingInPoint = 5f;
     [SerializeField] Light light;
+    [SerializeField] Animator animator;
     public ChaseEnemyModule chaseModule;
 
     private NavMeshAgent agent;
@@ -19,7 +20,7 @@ public class EnemyBasement : EnemyBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = false;
-        enemyData = new EnemyData(agent, this);
+        enemyData = new EnemyData(agent, this, animator);
 
         PatrolState = new EnemyPatrolState(enemyData, speedPatrol, points,chaseModule);
         IdleStateWithDelay = new EnemyIdleStateWithDelay(enemyData, delayWaitingInPoint, PatrolState);

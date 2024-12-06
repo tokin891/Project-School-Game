@@ -23,6 +23,7 @@ public class EnemyIdleStateWithDelay : IEnemyState
         data.Agent.SetDestination(data.Agent.transform.position);
 
         nextTimeToChange = Time.time + delayToStartPatrol;
+        data.EnemyAnimator.SetInteger("State", 0);
     }
 
     public void Exit()

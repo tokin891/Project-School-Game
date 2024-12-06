@@ -24,6 +24,7 @@ public class EnemyPatrolState : IEnemyState
     {
         enemyData.Agent.speed = speed;
         enemyData.Agent.SetDestination(points[destPoint].position);
+        enemyData.EnemyAnimator.SetInteger("State", 1);
     }
 
     public void Exit()
