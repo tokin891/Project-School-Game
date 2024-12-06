@@ -10,6 +10,6 @@ public class PlayerUI : MonoBehaviour
     private void OnEnable()
     {
         canG.alpha = 1f;
-        DOTween.To(() => canG.alpha, x => canG.alpha = x, 0, 2);
+        DOTween.To(() => canG.alpha, x => canG.alpha = x, 0, 6);
     }
 }
