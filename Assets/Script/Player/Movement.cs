@@ -19,6 +19,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float speedRunning;
     [SerializeField] private Transform heightUnderHead;
     [SerializeField] private Vector3 customGravity;
+    [SerializeField] private bool hideCursor = true;
 
     private float speed;
     private float xRot;
@@ -30,6 +31,7 @@ public class Movement : MonoBehaviour
     private CapsuleCollider capsuleCollider;
     private bool crouchingNotDone;
     private bool isCrouching;
+    private bool cantMoveMouse;
 
     public Transform Hand;
 
@@ -52,8 +54,8 @@ public class Movement : MonoBehaviour
             UpdateSensitivity(100);
 
         capsuleCollider = GetComponent<CapsuleCollider>();
-        Cursor.lockState = CursorLockMode.Locked;
 
+        SetCursorVisible(!hideCursor);
     }
 
     void Update()
@@ -102,7 +104,12 @@ public class Movement : MonoBehaviour
 
     public void Look(InputAction.CallbackContext context)
     {
-        inputMouse = context.ReadValue<Vector2>() * sensMouse * Time.deltaTime; ;
+        if (cantMoveMouse)
+        {
+            inputMouse = Vector2.zero;
+            return;
+        }
+        inputMouse = context.ReadValue<Vector2>() * sensMouse * Time.deltaTime;
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -155,5 +162,19 @@ public class Movement : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawSphere(heightUnderHead.position, 0.25f);
+    }
+
+    public void SetCursorVisible(bool value)
+    {
+        if (value)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            cantMoveMouse = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            cantMoveMouse = false;
+        }
     }
 }
