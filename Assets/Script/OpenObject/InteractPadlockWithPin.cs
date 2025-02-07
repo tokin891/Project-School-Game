@@ -2,9 +2,9 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
 
-public class InteractPadlock : MonoBehaviour, IInteract{
+public class InteractPadlockWithPin : MonoBehaviour, IInteract{
     [SerializeField] private GameObject characterToDisable;
-    [SerializeField] private PinManager pinManager;
+    [SerializeField] private PinManager padlockWithPin;
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private BoxCollider boxColliderToDisable;
     [SerializeField] private GameObject inputSystem;
@@ -38,8 +38,8 @@ public class InteractPadlock : MonoBehaviour, IInteract{
             characterToDisable.SetActive(true);
         }
 
-        if (pinManager != null){
-            pinManager.enabled = false;
+        if (padlockWithPin != null){
+            padlockWithPin.enabled = false;
         }
 
         if (mainCamera != null){
@@ -60,8 +60,8 @@ public class InteractPadlock : MonoBehaviour, IInteract{
             characterToDisable.SetActive(false);
         }
 
-        if (pinManager != null){
-            pinManager.enabled = true;
+        if (padlockWithPin != null){
+            padlockWithPin.enabled = true;
         }
 
         if (mainCamera != null){

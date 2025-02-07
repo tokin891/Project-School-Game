@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -346,6 +346,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &493795587 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1748018720114755839, guid: c089fd4bef37f5944bce1e3f406435d8, type: 3}
+  m_PrefabInstance: {fileID: 1145046216}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &552022285
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -365,7 +370,7 @@ PrefabInstance:
     - target: {fileID: 3300778551947890101, guid: deffa397a925ede408456e9393118e77, type: 3}
       propertyPath: doorObject
       value: 
-      objectReference: {fileID: 1974334834}
+      objectReference: {fileID: 634054642}
     - target: {fileID: 3875866103370409758, guid: deffa397a925ede408456e9393118e77, type: 3}
       propertyPath: m_Name
       value: Padlock (1)
@@ -419,10 +424,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deffa397a925ede408456e9393118e77, type: 3}
---- !u!1 &1116178992 stripped
+--- !u!1 &634054642 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 334412040380276001, guid: c089fd4bef37f5944bce1e3f406435d8, type: 3}
-  m_PrefabInstance: {fileID: 1145046216}
+  m_CorrespondingSourceObject: {fileID: 1748018720114755839, guid: c089fd4bef37f5944bce1e3f406435d8, type: 3}
+  m_PrefabInstance: {fileID: 1509486856}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1145046216
 PrefabInstance:
@@ -639,7 +644,7 @@ PrefabInstance:
     - target: {fileID: 3300778551947890101, guid: deffa397a925ede408456e9393118e77, type: 3}
       propertyPath: doorObject
       value: 
-      objectReference: {fileID: 1116178992}
+      objectReference: {fileID: 493795587}
     - target: {fileID: 3875866103370409758, guid: deffa397a925ede408456e9393118e77, type: 3}
       propertyPath: m_Name
       value: Padlock
@@ -693,8 +698,3 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deffa397a925ede408456e9393118e77, type: 3}
---- !u!1 &1974334834 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 334412040380276001, guid: c089fd4bef37f5944bce1e3f406435d8, type: 3}
-  m_PrefabInstance: {fileID: 1509486856}
-  m_PrefabAsset: {fileID: 0}

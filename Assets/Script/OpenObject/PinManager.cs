@@ -30,7 +30,7 @@ public class PinManager : MonoBehaviour{
 
     private float delay;
 
-    void Start(){
+    void Awake(){
         Door doorScript = doorObject.GetComponent<Door>();
         if (doorScript != null)
         {

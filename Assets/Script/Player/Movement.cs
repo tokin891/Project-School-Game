@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private Transform crouchCamera;
     [SerializeField] private float speedNormal;
     [SerializeField] private float speedRunning;
+    [SerializeField] private float speedCrouching;
     [SerializeField] private Transform heightUnderHead;
     [SerializeField] private Vector3 customGravity;
     [SerializeField] private bool hideCursor = true;
@@ -123,6 +124,7 @@ public class Movement : MonoBehaviour
         {
             isCrouching = true;
             SetCrouching(true);
+            speed = speedCrouching;
         }
         if(context.canceled)
         {
@@ -132,11 +134,14 @@ public class Movement : MonoBehaviour
             {
                 SetCrouching(false);
             }
+            speed = speedNormal;
         }
     }
 
     public void Run(InputAction.CallbackContext context)
     {
+        if (isCrouching)
+            return;
         if (context.performed)
         {
             IsRunning = true;

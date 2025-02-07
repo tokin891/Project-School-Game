@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, IInteract
 {
+    public bool isLocked;
     private bool isOpen;
 
     [SerializeField] private float smooth = 10f;
@@ -20,6 +21,7 @@ public class Door : MonoBehaviour, IInteract
 
     public void CameraInteractWithObject()
     {
+        if(isLocked) return;
         if (delay > Time.time)
         {
             return;

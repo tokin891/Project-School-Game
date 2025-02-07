@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class AdviceManager : MonoBehaviour{
     public static AdviceManager Instance;
-    [SerializeField] Text adviceText;
+    [SerializeField] TMP_Text adviceText;
     [SerializeField] GameObject adviceObject;
     [SerializeField] float fadeDuration;
 
@@ -15,6 +16,10 @@ public class AdviceManager : MonoBehaviour{
 
     public void DisplayMessage(string message, float textDuration){
         StartCoroutine(DisplayMessageCoroutine(message, textDuration));
+    }
+    public void DisplayMessage(string message)
+    {
+        StartCoroutine(DisplayMessageCoroutine(message, 5f));
     }
 
     private IEnumerator DisplayMessageCoroutine(string message, float textDuration){

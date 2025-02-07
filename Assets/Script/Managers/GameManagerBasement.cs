@@ -56,7 +56,8 @@ public class GameManagerBasement : MonoBehaviour
     {
         None,
         CutsceneNumber01,
-        Lvl1
+        ChairSystem,
+        Basement
     }
 
     [Serializable]

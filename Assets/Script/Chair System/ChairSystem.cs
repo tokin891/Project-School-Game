@@ -112,5 +112,6 @@ public class ChairSystem : MonoBehaviour
         player?.SetActive(true);
         gameObject.SetActive(false);
         trapChair?.SetActive(true);
+        GameManagerBasement.Instance.ChangeStateOfGameByInt(3);
     }
 }
