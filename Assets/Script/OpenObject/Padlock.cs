@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Padlock : InteractItem, IInteract
@@ -9,6 +10,7 @@ public class Padlock : InteractItem, IInteract
     [SerializeField] ItemCollection itemCollection;
     [SerializeField] private Door door;
     [SerializeField] private Camera cam;
+    [SerializeField] UnityEvent onDoorUnlock;
     private bool isOpen;
     private bool isEnding;
 
@@ -30,6 +32,7 @@ public class Padlock : InteractItem, IInteract
         isEnding = true;
         GetComponent<Animator>().SetTrigger("open");
         itemCollection.HideItemCollection();
+        
     }
 
     public void Stop(InputAction.CallbackContext context)
@@ -73,6 +76,7 @@ public class Padlock : InteractItem, IInteract
     {
         door.isLocked = false;
         ExitPadlock();
+        onDoorUnlock.Invoke();
         Destroy(gameObject);
     }
 

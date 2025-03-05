@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 
 public class ShadowPuzzle : MonoBehaviour, IInteract
 {
@@ -11,6 +12,7 @@ public class ShadowPuzzle : MonoBehaviour, IInteract
     [SerializeField] float speed;
     [SerializeField] GameObject player;
     [SerializeField] GameObject camera;
+    [SerializeField] PlayableDirector cutscene;
 
     private float angle;
     private bool stopAction;
@@ -64,11 +66,14 @@ public class ShadowPuzzle : MonoBehaviour, IInteract
 
     private void GoodAnserw()
     {
-        stopAction = true;       
+        stopAction = true;
+        StartCoroutine(AfterGoodAnserw());
     }
 
     public void CameraInteractWithObject()
     {
+        if(stopAction) return;
+
         camera?.SetActive(true);
         player?.SetActive(false);
         IsOn = true;
@@ -76,8 +81,20 @@ public class ShadowPuzzle : MonoBehaviour, IInteract
 
     public void Exit(InputAction.CallbackContext context)
     {
+        if (stopAction)
+            return;
+
         camera?.SetActive(false);
         player?.SetActive(true);
         IsOn = false;
+    }
+
+    IEnumerator AfterGoodAnserw()
+    {
+        yield return new WaitForSeconds(2f);
+        camera?.SetActive(false);
+        player?.SetActive(true);
+        IsOn = false;
+        cutscene.Play();
     }
 }

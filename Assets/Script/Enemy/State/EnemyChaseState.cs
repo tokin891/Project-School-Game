@@ -9,14 +9,16 @@ public class EnemyChaseState : IEnemyState
     private EnemyData enemyData;
     public Transform target;
     private float speed;
+    private float distance;
 
     private NavMeshPath path;
 
-    public EnemyChaseState(EnemyData enemyData,Transform target, float speed)
+    public EnemyChaseState(EnemyData enemyData,Transform target, float speed, float distance)
     {
         this.target = target;
         this.speed = speed;
         this.enemyData = enemyData;
+        this.distance = distance;
         path = new NavMeshPath();
     }
 
@@ -24,11 +26,12 @@ public class EnemyChaseState : IEnemyState
     {
         enemyData.Agent.speed = speed;
         enemyData.EnemyAnimator.SetInteger("State", 1);
+        enemyData.RbMoveAudio.volume = 0.85f;
     }
 
     public void Exit()
     {
-        
+        enemyData.RbMoveAudio.volume = 0f;
     }
 
     public void Update()
@@ -38,6 +41,11 @@ public class EnemyChaseState : IEnemyState
         if(NavMesh.CalculatePath(enemyData.Agent.transform.position, target.position, NavMesh.AllAreas, path) == false)
         {
             enemyData.EnemyBehaviour.SwitchState(enemyData.EnemyBehaviour.IdleStateWithDelay);
+        }
+
+        if(Vector3.Distance(enemyData.Agent.transform.position, target.position) < distance)
+        {
+            GameManagerBasement.Instance.ChangeStateOfGame(GameManagerBasement.State.Gameover);
         }
     }
 }

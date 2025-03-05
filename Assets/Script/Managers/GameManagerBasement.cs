@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManagerBasement : MonoBehaviour
 {
     public static GameManagerBasement Instance;
 
     [SerializeField] private EventOnChangeState[] eventsOnChangeState;
+    [SerializeField] GameObject deadCutscene;
+    [SerializeField] GameObject character;
 
     public State StateOfGame { private set; get; }
 
@@ -45,6 +48,14 @@ public class GameManagerBasement : MonoBehaviour
         }
 
         StateOfGame = state;
+
+        if(StateOfGame == State.Gameover) 
+        { 
+            deadCutscene.SetActive(true);
+            character.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     public void ChangeStateOfGameByInt(int state)
@@ -57,7 +68,9 @@ public class GameManagerBasement : MonoBehaviour
         None,
         CutsceneNumber01,
         ChairSystem,
-        Basement
+        SolveShadowPuzzle,
+        FightWithBot,
+        Gameover
     }
 
     [Serializable]
@@ -67,5 +80,10 @@ public class GameManagerBasement : MonoBehaviour
 
         public UnityEvent onEnterState;
         public UnityEvent onExitState;
+    }
+
+    public void ChangeScene(int index)
+    {
+        SceneManager.LoadScene(index);
     }
 }

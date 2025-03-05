@@ -14,6 +14,7 @@ public class ChairSystem : MonoBehaviour
     [SerializeField] CanvasGroup blackScreem;
     [SerializeField] GameObject player;
     [SerializeField] GameObject trapChair;
+    [SerializeField] AudioSource hitwood;
 
     private Vector2 input;
     private Transform chair;
@@ -83,12 +84,14 @@ public class ChairSystem : MonoBehaviour
     {
         isLeftSide = true;
         AddRatio();
+        hitwood.Play();
     }
 
     public void AddRatioShakeRight()
     {
         isLeftSide = false;
         AddRatio();
+        hitwood.Play();
     }
 
     private void AddRatio()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.EventSystems.StandaloneInputModule;
 using UnityEngine.InputSystem;
+using UnityEditor.ShaderGraph.Internal;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
@@ -21,6 +22,9 @@ public class Movement : MonoBehaviour
     [SerializeField] private Transform heightUnderHead;
     [SerializeField] private Vector3 customGravity;
     [SerializeField] private bool hideCursor = true;
+    [SerializeField] private float delayFootstepNormal = 0.85f;
+    [SerializeField] private float delayFootstepCrouch = 1.2f;
+    [SerializeField] private AudioSource fs;
 
     private float speed;
     private float xRot;
@@ -33,6 +37,8 @@ public class Movement : MonoBehaviour
     private bool crouchingNotDone;
     private bool isCrouching;
     private bool cantMoveMouse;
+    private float nextTimeToPlayFootstep;
+    private bool isMoving;
 
     public Transform Hand;
 
@@ -74,6 +80,16 @@ public class Movement : MonoBehaviour
         {
             SetCrouching(false);
         }
+
+        if(isMoving)
+        {
+            if (nextTimeToPlayFootstep < Time.time)
+            {
+                fs.Play();
+
+                nextTimeToPlayFootstep = IsCrouching ? Time.time + delayFootstepCrouch : Time.time + delayFootstepNormal;
+            }
+        }
     }
 
     void FixedUpdate()
@@ -100,6 +116,7 @@ public class Movement : MonoBehaviour
             capsuleCollider.height = 2.45f;
             cameraTarget = cameraAwakePos;
             IsCrouching = false;
+            speed = speedNormal;
         }
     }
 
@@ -116,6 +133,14 @@ public class Movement : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         inputMove = context.ReadValue<Vector2>();
+
+        if(context.performed)
+        {
+            isMoving = true;
+        }
+
+        if(context.canceled)
+            isMoving = false;
     }
 
     public void Crouch(InputAction.CallbackContext context)
@@ -134,7 +159,6 @@ public class Movement : MonoBehaviour
             {
                 SetCrouching(false);
             }
-            speed = speedNormal;
         }
     }
 

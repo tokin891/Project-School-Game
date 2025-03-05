@@ -47,10 +47,14 @@ public class ItemCollection : MonoBehaviour
         playerMove.SetCursorVisible(true);
         IsOpen = true;
 
-        if (iii == null)
-            return;
-        this.interactItemSelected = iii;
-        Debug.Log(iii.Key.NameItem);
+        if (iii != null)
+        {
+            this.interactItemSelected = iii;
+            Debug.Log(iii.Key.NameItem);
+        }
+
+        Time.timeScale = 0;
+        AudioListener.pause = true;
     }
 
     public void HideItemCollection()
@@ -61,6 +65,9 @@ public class ItemCollection : MonoBehaviour
         playerMove.SetCursorVisible(false);
         IsOpen = false;
         interactItemSelected = null;
+
+        Time.timeScale = 1;
+        AudioListener.pause = false;
     }
 
     public bool CheckIsItemCorrect(ItemFromCollection ifc) 

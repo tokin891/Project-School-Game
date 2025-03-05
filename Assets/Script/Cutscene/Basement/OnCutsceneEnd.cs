@@ -10,6 +10,7 @@ public class OnCutsceneEnd : MonoBehaviour
     private PlayableDirector pd;
 
     [SerializeField] private UnityEvent onCutsceneEnd;
+    [SerializeField] bool destroyOnEnd = true;
 
     private void Awake()
     {
@@ -26,7 +27,8 @@ public class OnCutsceneEnd : MonoBehaviour
         if (isPlayVideo && pd.state != PlayState.Playing)
         {
             onCutsceneEnd.Invoke();
-            Destroy(gameObject);
+            if(destroyOnEnd)
+                Destroy(gameObject);
         }
     }
 }

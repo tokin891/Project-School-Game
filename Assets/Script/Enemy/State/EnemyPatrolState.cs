@@ -25,16 +25,17 @@ public class EnemyPatrolState : IEnemyState
         enemyData.Agent.speed = speed;
         enemyData.Agent.SetDestination(points[destPoint].position);
         enemyData.EnemyAnimator.SetInteger("State", 1);
+        enemyData.RbMoveAudio.volume = 0.65f;
     }
 
     public void Exit()
     {
-        
+        enemyData.RbMoveAudio.volume = 0;
     }
 
     public void Update()
     {
-        if (!enemyData.Agent.pathPending && enemyData.Agent.remainingDistance < 0.5f)
+        if (!enemyData.Agent.pathPending && Vector3.Distance(enemyData.Agent.transform.position, points[destPoint].position) < 2f)
         {
             GotoNextPoint();
         }
@@ -55,5 +56,8 @@ public class EnemyPatrolState : IEnemyState
         destPoint = (destPoint + 1) % points.Length;
 
         enemyData.EnemyBehaviour.SwitchState(enemyData.EnemyBehaviour.IdleStateWithDelay);
+        Debug.Log("Go to idle state");
     }
+
+    public void UpdatePatrolPoints(Transform[] newPoints) => points = newPoints;
 }

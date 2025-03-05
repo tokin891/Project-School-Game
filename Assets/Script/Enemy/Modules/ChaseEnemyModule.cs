@@ -26,7 +26,7 @@ public class ChaseEnemyModule : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         path = new NavMeshPath();
     }
@@ -43,6 +43,7 @@ public class ChaseEnemyModule : MonoBehaviour
         if(!NavMesh.CalculatePath(enemy.transform.position, Target.transform.position,NavMesh.AllAreas, path))
         {
             Debug.Log(NavMesh.CalculatePath(enemy.transform.position, Target.transform.position, NavMesh.AllAreas, path));
+            Debug.Log("Player couldn't reach");
             return false;
         }
 
